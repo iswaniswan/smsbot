@@ -31,7 +31,7 @@ class UplonMenu extends \yii\widgets\Menu
     /**
      * @var string
      */
-    public static $iconStyleDefault = 'mdi';
+    public static $iconStyleDefault = '';
 
     /**
      * @inheritdoc
@@ -111,7 +111,7 @@ class UplonMenu extends \yii\widgets\Menu
         } else {
             $iconStyle = $item['iconStyle'] ?? static::$iconStyleDefault;
             $icon = $item['icon'] ?? static::$iconDefault;
-            $iconClassArr = ['', $iconStyle, 'mdi-'.$icon];
+            $iconClassArr = ['', $iconStyle, $icon];
             isset($item['iconClassAdded']) && $iconClassArr[] = $item['iconClassAdded'];
             $iconClass = implode(' ', $iconClassArr);
         }

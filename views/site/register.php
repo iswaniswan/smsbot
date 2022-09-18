@@ -8,14 +8,14 @@ use yii\bootstrap5\ActiveForm;
 use yii\bootstrap5\Html;
 \app\assets\UplonAsset::register($this);
 
-$this->title = 'Login';
+$this->title = 'Register';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="row mb-4 justify-content-center">
     <div class="col-md-6" style="max-width: 20rem">
         <?php $form = ActiveForm::begin([
-            'id' => 'login-form',
+            'id' => 'register-form',
             'layout' => 'horizontal',
             'fieldConfig' => [
 //                'template' => "{label}\n{input}\n{error}",
@@ -41,13 +41,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="card-body">
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
-
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <?= $form->field($model, 'rememberMe')->checkbox([
-                    'template' => "<div class=\"col-12 checkbox checkbox-primary ml-2 text-secondary\">{input} {label}</div>\n<div class=\"col-12\">{error}</div>",
+                <?= $form->field($model, 'username')->textInput([
+                        'required' =>true
                 ]) ?>
+
+                <?= $form->field($model, 'email')->input('email', [
+                        'required' => true
+                ]) ?>
+
+                <?= $form->field($model, 'password')->passwordInput([
+                        'required' => true
+                ]) ?>
+
+                <?= $form->field($model, 'accept_terms')->checkbox([
+                    'template' => "<div class=\"col-12 checkbox checkbox-primary ml-2 text-secondary\">{input} {label}</div>\n<div class=\"col-12\">{error}</div>",
+                    'checked' => true
+                ])->label('I accept Terms and Conditions') ?>
 
                 <div class="" style="padding: 0.5rem 0rem;">
                     <?= Html::submitButton('Login', ['class' => 'btn btn-outline-primary', 'name' => 'login-button']) ?>
@@ -58,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- end card -->
         <div class="row mt-3">
             <div class="col-12 text-center">
-                <p class="text-secondary">Don't have an account? <a href="<?= \yii\helpers\Url::to(['/site/register']) ?>" class="text-purple ml-1"><b>Register</b></a></p>
+                <p class="text-secondary">Don't have an account? <a href="#" class="text-purple ml-1"><b>Register</b></a></p>
             </div> <!-- end col -->
         </div>
         <!-- end row -->

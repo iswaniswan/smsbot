@@ -12,17 +12,18 @@ use app\widgets\UplonMenu;
 
             <?= UplonMenu::widget([
                 'items' => [
-                    ['label' => 'MENU UTAMA','header' => true],
-                    ['label' => 'Dashboard', 'icon' => 'view-dashboard', 'url' => ['/admin/index']],
-                    ['label' => 'Daftar Jabatan', 'icon' =>'puzzle-outline', 'items'=>[
-                        ['label' => 'Analisis Jabatan', 'url' =>['/anjab-jabatan/index']],
-                        ['label' => 'ABK', 'url' =>['/anjab-jabatan/index-abk']],
-                        ['label' => 'Evaluasi Jabatan', 'url' =>['/anjab-jabatan/index-evjab']],
-                        ['label' => 'SKJ', 'url' =>['/anjab-jabatan/index-skj']],
+//                    ['label' => 'MENU UTAMA','header' => true],
+                    ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/admin/index']],
+//                    ['label' => 'Daftar Jabatan', 'icon' =>'puzzle-outline', 'items'=>[
+//                        ['label' => 'Analisis Jabatan', 'url' =>['/anjab-jabatan/index']],
+//                        ['label' => 'ABK', 'url' =>['/anjab-jabatan/index-abk']],
+//                        ['label' => 'Evaluasi Jabatan', 'url' =>['/anjab-jabatan/index-evjab']],
+//                        ['label' => 'SKJ', 'url' =>['/anjab-jabatan/index-skj']],
+//                    ]],
+                    ['label' => 'Member', 'icon' =>'ti-user', 'items'=>[
+                        ['label' => 'Member', 'url' =>['/member']],
                     ]],
-                    ['label' => 'Daftar Unit Kerja', 'icon' =>'puzzle-outline', 'items'=>[
-                        ['label' => 'Status Validasi Evjab', 'url' =>['/instansi/index-status-validasi-evjab']],
-                    ]],
+                    ['label' => 'Logout', 'icon'=>'ti-shift-right', 'url' => ['/site/logout'],'template'=>'<a class="nav-link {active}" data-method="post" href="{url}" {target}>{icon} {label}</a>'],
                 ]
             ]) ?>
         </div>

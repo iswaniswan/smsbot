@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
+use yii\base\Exception;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
@@ -57,11 +59,14 @@ class SiteController extends Controller
     /**
      * Displays homepage.
      *
-     * @return string
+     * @return Response
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/site/login']);
+        }
+        return $this->redirect(['/dashboard/index']);
     }
 
     /**
@@ -72,12 +77,18 @@ class SiteController extends Controller
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(['/site/login']);
         }
 
+        $this->layout = 'main-login';
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+        if ($model->load(Yii::$app->request->post())) {
+
+            if ($model->login()) {
+                return $this->actionIndex();
+            }
+
+            Yii::$app->session->setFlash('error', 'Invalid login');
         }
 
         $model->password = '';
@@ -95,7 +106,9 @@ class SiteController extends Controller
     {
         Yii::$app->user->logout();
 
-        return $this->goHome();
+        return $this->redirect([
+            'site/login',
+        ]);
     }
 
     /**
@@ -124,5 +137,39 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionRegister($params=[])
+    {
+        $this->layout = 'main-register';
+        $model = new User();
+        if ($model->load(Yii::$app->request->post())) {
+            $plain_password = $model->password;
+            $hashPassword = Yii::$app->getSecurity()->generatePasswordHash($plain_password);
+            $model->password = $hashPassword;
+
+            if ($model->save()) {
+
+                /** autologin model */
+                $login = new LoginForm([
+                    'username' => $model->username,
+                    'password' => $plain_password
+                ]);
+
+                $login->login();
+
+                Yii::$app->session->setFlash('success', 'Registration success');
+                /** registration success, then send email */
+                //$model->sendEmail();
+                return $this->actionIndex();
+            }
+
+            Yii::$app->session->setFlash('error', 'An error occured when register');
+        }
+
+        $model->password = '';
+        return $this->render('register', [
+            'model' => $model,
+        ]);
     }
 }
