@@ -8,40 +8,46 @@ use app\models\MemberSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
-/* custom controller, theme uplon integrated */
 /**
  * MemberController implements the CRUD actions for Member model.
  */
 class MemberController extends Controller
 {
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     /**
      * Lists all Member models.
-     *
-     * @return string
+     * @return mixed
      */
     public function actionIndex()
     {
         $searchModel = new MemberSearch();
-        $dataProvider = $searchModel->search($this->request->queryParams);
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -52,23 +58,23 @@ class MemberController extends Controller
     /**
      * Displays a single Member model.
      * @param int $id ID
-     * @return string
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return mixed
      */
     public function actionView($id)
     {
-        $referrer = $this->request->referrer;
+        $referrer = Yii::$app->request->referrer;
+
         return $this->render('view', [
             'model' => $this->findModel($id),
             'referrer' => $referrer,
-            'mode' => 'view'
+            'mode' => 'view',
         ]);
     }
 
     /**
      * Creates a new Member model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return string|\yii\web\Response
+     * @return mixed
      */
     public function actionCreate()
     {
@@ -80,14 +86,14 @@ class MemberController extends Controller
             $referrer = $_POST['referrer'];
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Create success.');
+                Yii::$app->session->setFlash('success', 'Data berhasil disimpan.');
                 return $this->redirect($referrer);
             }
 
-            Yii::$app->session->setFlash('error', 'An error occured when create.');
+            Yii::$app->session->setFlash('error', 'Data gagal disimpan. Silahkan periksa kembali isian Anda.');
         }
 
-        return $this->render('view', [
+        return $this->render('view2', [
             'model' => $model,
             'referrer' => $referrer,
             'mode' => 'create'
@@ -98,48 +104,46 @@ class MemberController extends Controller
      * Updates an existing Member model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
-     * @return string|\yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return mixed
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
         $referrer = Yii::$app->request->referrer;
 
         if ($model->load(Yii::$app->request->post())) {
             $referrer = $_POST['referrer'];
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Update success.');
+                Yii::$app->session->setFlash('success', 'Data berhasil disimpan.');
                 return $this->redirect($referrer);
             }
 
-            Yii::$app->session->setFlash('error', 'An error occured when update.');
+            Yii::$app->session->setFlash('error', 'Data gagal disimpan. Silahkan periksa kembali isian Anda.');
         }
 
-        return $this->render('view', [
+        return $this->render('view2', [
             'model' => $model,
             'referrer' => $referrer,
             'mode' => 'update'
         ]);
+
     }
 
     /**
      * Deletes an existing Member model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
-     * @return \yii\web\Response
-     * @throws NotFoundHttpException if the model cannot be found
+     * @return mixed
      */
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
 
         if ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'Delete success');
+            Yii::$app->session->setFlash('success', 'Data berhasil dihapus');
         } else {
-            Yii::$app->session->setFlash('error', 'An error occured when delete.');
+            Yii::$app->session->setFlash('error', 'Data gagal dihapus');
         }
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -154,10 +158,11 @@ class MemberController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = Member::findOne(['id' => $id])) !== null) {
+        if (($model = Member::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

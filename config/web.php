@@ -83,6 +83,9 @@ if (YII_ENV_DEV) {
                     'custom-app' => '@app/themes/uplon/gii/crud'
                 ]
             ],
+            'controller' => [
+                'class' => 'yii\gii\generators\controller\Generator'
+            ]
         ],
     ];
 }

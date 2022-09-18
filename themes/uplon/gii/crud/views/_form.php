@@ -16,13 +16,20 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
-use yii\bootstrap\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $referrer string */
+/* @var $mode string|null */
+
+$inputOptions = [];
+if (@$mode == 'view') {
+    $inputOptions = ['disabled' => true];
+}
+
 ?>
 
 <?= '<?php' ?> $form = ActiveForm::begin([
@@ -31,37 +38,48 @@ use yii\helpers\Html;
     'enableClientValidation' => false,
     'fieldConfig' => [
         'horizontalCssClasses' => [
-            'label' => 'col-sm-2',
-            'wrapper' => 'col-sm-4',
+            'label' => 'col-2',
+            'wrapper' => 'col',
             'error' => '',
             'hint' => '',
+            'field' => 'mb-3 row',
         ],
+        'options' => ['style' => 'padding:unset'],
+        'inputOptions' => $inputOptions,
     ]
 ]); ?>
 
-<div class="<?= Inflector::camel2id(StringHelper::basename($generator->modelClass)) ?>-form card card-primary">
+<div class="row">
+    <div class="container-fluid">
+        <div class="member-form card-box">
+            <div class="card-body row">
+                <div class="col-12" style="border-bottom: 1px solid #ccc; margin-bottom: 2rem;">
+                    <h4 class="card-title mb-3"><?="<?="?> $this->title ?></h4>
+                </div>
 
-    <div class="card-header">
-        <h3 class="card-title">Form <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?></h3>
-    </div>
-	<div class="card-body">
+                <div class="container-fluid">
+                    <?= '<?=' ?> $form->errorSummary($model) ?>
 
-        <?= '<?=' ?> $form->errorSummary($model) ?>
-
-<?php foreach ($generator->getColumnNames() as $attribute) {
-    if (in_array($attribute, $safeAttributes)) {
-        echo '        <?= ' . $generator->generateActiveField($attribute) . " ?>\n\n";
-    }
-} ?>
-        <?= '<?='; ?> Html::hiddenInput('referrer', $referrer) ?>
-
-	</div>
-    <div class="card-footer">
-        <div class="col-sm-offset-2 col-sm-3">
-            <?= '<?= ' ?>Html::submitButton('<i class="fa fa-check"></i> Simpan', ['class' => 'btn btn-success btn-flat']) ?>
+                    <?php foreach ($generator->getColumnNames() as $attribute) {
+                        if (in_array($attribute, $safeAttributes)) {
+                            echo '<?= ' . $generator->generateActiveField($attribute) . " ?>\n\n";
+                        }
+                    } ?>
+                </div>
+                <?= '<?='; ?> Html::hiddenInput('referrer', $referrer) ?>
+            </div>
         </div>
     </div>
-
+</div>
+<div class="row mb-5">
+    <div class="container-fluid">
+        <?="<?="?> Html::a('<i class="ti-arrow-left"></i><span class="ml-2">Back</span>', ['/member'], ['class' => 'btn btn-info mb-1']) ?>
+        <?="<?php"?> if ($mode == 'view') { ?>
+            <?="<?="?> Html::a('<i class="ti-pencil-alt"></i><span class="ml-2">Edit</span>', ['update', 'id' => $model->id], ['class' => 'btn btn-warning mb-1']) ?>
+        <?="<?php"?> } else { ?>
+            <?="<?="?> Html::submitButton('<i class="ti-check"></i><span class="ml-2">' . ucwords($mode) .'</span>', ['class' => 'btn btn-primary mb-1']) ?>
+        <?="<?php"?> } ?>
+    </div>
 </div>
 
-<?= '<?php ' ?>ActiveForm::end(); ?>
+<?="<?php"?> ActiveForm::end(); ?>

@@ -7,17 +7,11 @@ use yii\db\ActiveRecordInterface;
 use yii\helpers\StringHelper;
 
 
-/* @var $this yii\web\View */
-/* @var $generator yii\gii\generators\crud\Generator */
+/** @var yii\web\View $this */
+/** @var yii\gii\generators\crud\Generator $generator */
 
 $controllerClass = StringHelper::basename($generator->controllerClass);
 $modelClass = StringHelper::basename($generator->modelClass);
-$labels = $generator->generateSearchLabels();
-if (isset($labels['status_hapus'])) {
-    unset($labels['status_hapus']);
-}
-
-$labels = array_slice($labels, 1);
 $searchModelClass = StringHelper::basename($generator->searchModelClass);
 if ($modelClass === $searchModelClass) {
     $searchModelAlias = $searchModelClass . 'Search';
@@ -38,54 +32,48 @@ namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>
 use Yii;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
-use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : '') ?>;
+use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
 <?php else: ?>
 use yii\data\ActiveDataProvider;
 <?php endif; ?>
 use <?= ltrim($generator->baseControllerClass, '\\') ?>;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 
+/* custom controller, theme uplon integrated */
 /**
  * <?= $controllerClass ?> implements the CRUD actions for <?= $modelClass ?> model.
  */
 class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->baseControllerClass) . "\n" ?>
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::class,
-                'rules' => [
-                    [
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
+        return array_merge(
+            parent::behaviors(),
+            [
+                'verbs' => [
+                    'class' => VerbFilter::className(),
+                    'actions' => [
+                        'delete' => ['POST'],
                     ],
                 ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
-        ];
+            ]
+        );
     }
 
     /**
      * Lists all <?= $modelClass ?> models.
-     * @return mixed
+     *
+     * @return string
      */
     public function actionIndex()
     {
 <?php if (!empty($generator->searchModelClass)): ?>
-        $searchModel = new <?= $searchModelAlias ?? $searchModelClass ?>();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $searchModel = new <?= isset($searchModelAlias) ? $searchModelAlias : $searchModelClass ?>();
+        $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -94,6 +82,18 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
 <?php else: ?>
         $dataProvider = new ActiveDataProvider([
             'query' => <?= $modelClass ?>::find(),
+            /*
+            'pagination' => [
+                'pageSize' => 50
+            ],
+            'sort' => [
+                'defaultOrder' => [
+<?php foreach ($pks as $pk): ?>
+                    <?= "'$pk' => SORT_DESC,\n" ?>
+<?php endforeach; ?>
+                ]
+            ],
+            */
         ]);
 
         return $this->render('index', [
@@ -105,19 +105,23 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
     /**
      * Displays a single <?= $modelClass ?> model.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return string
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionView(<?= $actionParams ?>)
     {
+        $referrer = $this->request->referrer;
         return $this->render('view', [
             'model' => $this->findModel(<?= $actionParams ?>),
+            'referrer' => $referrer,
+            'mode' => 'view'
         ]);
     }
 
     /**
      * Creates a new <?= $modelClass ?> model.
      * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
@@ -129,16 +133,17 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
             $referrer = $_POST['referrer'];
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Data berhasil disimpan.');
+                Yii::$app->session->setFlash('success', 'Create success.');
                 return $this->redirect($referrer);
             }
 
-            Yii::$app->session->setFlash('error', 'Data gagal disimpan. Silahkan periksa kembali isian Anda.');
+            Yii::$app->session->setFlash('error', 'An error occured when create.');
         }
 
-        return $this->render('create', [
+        return $this->render('view', [
             'model' => $model,
-            'referrer' => $referrer
+            'referrer' => $referrer,
+            'mode' => 'create'
         ]);
     }
 
@@ -146,45 +151,48 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Updates an existing <?= $modelClass ?> model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionUpdate(<?= $actionParams ?>)
     {
         $model = $this->findModel(<?= $actionParams ?>);
+
         $referrer = Yii::$app->request->referrer;
 
         if ($model->load(Yii::$app->request->post())) {
             $referrer = $_POST['referrer'];
 
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Data berhasil disimpan.');
+                Yii::$app->session->setFlash('success', 'Update success.');
                 return $this->redirect($referrer);
             }
 
-            Yii::$app->session->setFlash('error', 'Data gagal disimpan. Silahkan periksa kembali isian Anda.');
+            Yii::$app->session->setFlash('error', 'An error occured when update.');
         }
 
-        return $this->render('update', [
+        return $this->render('view', [
             'model' => $model,
-            'referrer' => $referrer
+            'referrer' => $referrer,
+            'mode' => 'update'
         ]);
-
     }
 
     /**
      * Deletes an existing <?= $modelClass ?> model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return mixed
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException if the model cannot be found
      */
     public function actionDelete(<?= $actionParams ?>)
     {
         $model = $this->findModel(<?= $actionParams ?>);
 
         if ($model->delete()) {
-            Yii::$app->session->setFlash('success', 'Data berhasil dihapus');
+            Yii::$app->session->setFlash('success', 'Delete success');
         } else {
-            Yii::$app->session->setFlash('error', 'Data gagal dihapus');
+            Yii::$app->session->setFlash('error', 'An error occured when delete.');
         }
 
         return $this->redirect(Yii::$app->request->referrer);
@@ -194,27 +202,22 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
      * Finds the <?= $modelClass ?> model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * <?= implode("\n     * ", $actionParamComments) . "\n" ?>
-     * @return <?=                   $modelClass ?> the loaded model
+     * @return <?= $modelClass ?> the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel(<?= $actionParams ?>)
     {
 <?php
-if (count($pks) === 1) {
-    $condition = '$id';
-} else {
-    $condition = [];
-    foreach ($pks as $pk) {
-        $condition[] = "'$pk' => \$$pk";
-    }
-    $condition = '[' . implode(', ', $condition) . ']';
+$condition = [];
+foreach ($pks as $pk) {
+    $condition[] = "'$pk' => \$$pk";
 }
+$condition = '[' . implode(', ', $condition) . ']';
 ?>
         if (($model = <?= $modelClass ?>::findOne(<?= $condition ?>)) !== null) {
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(<?= $generator->generateString('The requested page does not exist.') ?>);
     }
-
 }
