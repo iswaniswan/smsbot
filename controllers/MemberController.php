@@ -5,9 +5,11 @@ namespace app\controllers;
 use Yii;
 use app\models\Member;
 use app\models\MemberSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\components\Session;
 
 /* custom controller, theme uplon integrated */
 /**
@@ -20,18 +22,33 @@ class MemberController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::className(),
-                    'actions' => [
-                        'delete' => ['POST'],
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'index-member', 'view', 'create', 'update', 'delete', 'index-sponsoring', 'view-sponsoring'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['index-admin', 'index-rekap'],
+                        'allow' => true,
+                        'matchCallback' => function ($rule, $action) {
+                            return Session::isAdmin();
+                        }
                     ],
                 ],
-            ]
-        );
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
+
 
     /**
      * Lists all Member models.

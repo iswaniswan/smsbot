@@ -55,11 +55,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'accept_terms')->checkbox([
                     'template' => "<div class=\"col-12 checkbox checkbox-primary ml-2 text-secondary\">{input} {label}</div>\n<div class=\"col-12\">{error}</div>",
-                    'checked' => true
+                    'required' => true,
                 ])->label('I accept Terms and Conditions') ?>
 
                 <div class="" style="padding: 0.5rem 0rem;">
-                    <?= Html::submitButton('Login', ['class' => 'btn btn-outline-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-outline-primary', 'name' => 'login-button']) ?>
                 </div>
             </div> <!-- end card-body -->
         </div>
@@ -67,7 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- end card -->
         <div class="row mt-3">
             <div class="col-12 text-center">
-                <p class="text-secondary">Don't have an account? <a href="#" class="text-purple ml-1"><b>Register</b></a></p>
+                <p class="text-secondary">Have an account? <a href="<?= \yii\helpers\Url::to(['/site/login']) ?>" class="text-primary ml-1"><b>Login</b></a></p>
             </div> <!-- end col -->
         </div>
         <!-- end row -->

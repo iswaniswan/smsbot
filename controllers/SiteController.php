@@ -48,6 +48,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'layout' => 'main-error'
             ],
             'captcha' => [
                 'class' => 'yii\captcha\CaptchaAction',
@@ -172,4 +173,5 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
 }
