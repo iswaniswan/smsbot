@@ -176,7 +176,7 @@
                 <div class="dropdown-divider"></div>
 
                 <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                <a href="<?= \yii\helpers\Url::to(['/site/logout']) ?>" data-method="post" class="dropdown-item notify-item">
                     <i class="mdi mdi-logout-variant"></i>
                     <span>Logout</span>
                 </a>

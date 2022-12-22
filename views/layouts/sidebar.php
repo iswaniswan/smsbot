@@ -13,7 +13,7 @@ use app\widgets\UplonMenu;
             <?= UplonMenu::widget([
                 'items' => [
 //                    ['label' => 'MENU UTAMA','header' => true],
-                    ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/admin/index']],
+                    ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/dashboard/index']],
 //                    ['label' => 'Daftar Jabatan', 'icon' =>'puzzle-outline', 'items'=>[
 //                        ['label' => 'Analisis Jabatan', 'url' =>['/anjab-jabatan/index']],
 //                        ['label' => 'ABK', 'url' =>['/anjab-jabatan/index-abk']],

@@ -19,7 +19,7 @@ use yii\widgets\DetailView;
 
 $this->title = "Detail <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>";
 if ($mode !== 'view') {
-    $this->title = ucwords($mode) . "<?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>";
+    $this->title = ucwords($mode) . " <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>";
 }
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <?="<?="?> \app\widgets\Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     'options' => [
-        'title' => "<?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>"
+        'title' => " <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>"
     ],
 ]) ?>
 

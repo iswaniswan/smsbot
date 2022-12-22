@@ -73,7 +73,7 @@ if (@$mode == 'view') {
 </div>
 <div class="row mb-5">
     <div class="container-fluid">
-        <?="<?="?> Html::a('<i class="ti-arrow-left"></i><span class="ml-2">Back</span>', ['/member'], ['class' => 'btn btn-info mb-1']) ?>
+        <?="<?="?> Html::a('<i class="ti-arrow-left"></i><span class="ml-2">Back</span>', ['index'], ['class' => 'btn btn-info mb-1']) ?>
         <?="<?php"?> if ($mode == 'view') { ?>
             <?="<?="?> Html::a('<i class="ti-pencil-alt"></i><span class="ml-2">Edit</span>', ['update', 'id' => $model->id], ['class' => 'btn btn-warning mb-1']) ?>
         <?="<?php"?> } else { ?>
