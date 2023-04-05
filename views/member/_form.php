@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Mode;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -7,10 +8,10 @@ use yii\helpers\Html;
 /* @var $model app\models\Member */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $referrer string */
-/* @var $mode string|null */
+/* @var $mode Mode */
 
 $inputOptions = [];
-if (@$mode == 'view') {
+if (@$mode == Mode::READ) {
     $inputOptions = ['disabled' => true];
 }
 

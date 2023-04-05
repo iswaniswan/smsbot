@@ -30,6 +30,7 @@ echo "<?php\n";
 namespace <?= StringHelper::dirname(ltrim($generator->controllerClass, '\\')) ?>;
 
 use Yii;
+use app\components\Mode;
 use <?= ltrim($generator->modelClass, '\\') ?>;
 <?php if (!empty($generator->searchModelClass)): ?>
 use <?= ltrim($generator->searchModelClass, '\\') . (isset($searchModelAlias) ? " as $searchModelAlias" : "") ?>;
@@ -114,7 +115,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         return $this->render('view', [
             'model' => $this->findModel(<?= $actionParams ?>),
             'referrer' => $referrer,
-            'mode' => 'view'
+            'mode' => Mode::READ
         ]);
     }
 
@@ -143,7 +144,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         return $this->render('view', [
             'model' => $model,
             'referrer' => $referrer,
-            'mode' => 'create'
+            'mode' => Mode::CREATE
         ]);
     }
 
@@ -174,7 +175,7 @@ class <?= $controllerClass ?> extends <?= StringHelper::basename($generator->bas
         return $this->render('view', [
             'model' => $model,
             'referrer' => $referrer,
-            'mode' => 'update'
+            'mode' => Mode::UPDATE
         ]);
     }
 

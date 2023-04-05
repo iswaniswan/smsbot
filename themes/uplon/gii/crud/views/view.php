@@ -11,14 +11,17 @@ $urlParams = $generator->generateUrlParams();
 echo "<?php\n";
 ?>
 
+use app\components\Mode;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
+/* @var $mode \app\components\Mode */
+/* @var $referrer string */
 
 $this->title = "Detail <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>";
-if ($mode !== 'view') {
+if ($mode !== Mode::READ) {
     $this->title = ucwords($mode) . " <?= Inflector::camel2words(StringHelper::basename($generator->modelClass)); ?>";
 }
 $this->params['breadcrumbs'][] = ['label' => <?= $generator->generateString(Inflector::camel2words(StringHelper::basename($generator->modelClass))) ?>, 'url' => ['index']];

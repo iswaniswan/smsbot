@@ -16,6 +16,7 @@ if (empty($safeAttributes)) {
 echo "<?php\n";
 ?>
 
+use app\components\Mode;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -23,10 +24,11 @@ use yii\helpers\Html;
 /* @var $model <?= ltrim($generator->modelClass, '\\') ?> */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $referrer string */
-/* @var $mode string|null */
+/* @var $mode Mode */
+
 
 $inputOptions = [];
-if (@$mode == 'view') {
+if (@$mode == Mode::READ) {
     $inputOptions = ['disabled' => true];
 }
 
@@ -74,10 +76,10 @@ if (@$mode == 'view') {
 <div class="row mb-5">
     <div class="container-fluid">
         <?="<?="?> Html::a('<i class="ti-arrow-left"></i><span class="ml-2">Back</span>', ['index'], ['class' => 'btn btn-info mb-1']) ?>
-        <?="<?php"?> if ($mode == 'view') { ?>
+        <?="<?php"?> if ($mode == Mode::READ) { ?>
             <?="<?="?> Html::a('<i class="ti-pencil-alt"></i><span class="ml-2">Edit</span>', ['update', 'id' => $model->id], ['class' => 'btn btn-warning mb-1']) ?>
         <?="<?php"?> } else { ?>
-            <?="<?="?> Html::submitButton('<i class="ti-check"></i><span class="ml-2">' . ucwords($mode) .'</span>', ['class' => 'btn btn-primary mb-1']) ?>
+            <?="<?="?> Html::submitButton('<i class="ti-check"></i><span class="ml-2">' . ucwords('update') .'</span>', ['class' => 'btn btn-primary mb-1']) ?>
         <?="<?php"?> } ?>
     </div>
 </div>
