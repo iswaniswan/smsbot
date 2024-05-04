@@ -3,16 +3,20 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "role".
  *
  * @property int $id
- * @property string $nama
+ * @property string $name
  * @property string $code
  */
 class Role extends \yii\db\ActiveRecord
 {
+
+    const ADMIN = 1;
+
     /**
      * {@inheritdoc}
      */
@@ -27,8 +31,8 @@ class Role extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nama', 'code'], 'required'],
-            [['nama', 'code'], 'string', 'max' => 255],
+            [['name', 'code'], 'required'],
+            [['name', 'code'], 'string', 'max' => 255],
         ];
     }
 
@@ -39,8 +43,14 @@ class Role extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nama' => 'Nama',
+            'name' => 'Name',
             'code' => 'Code',
         ];
     }
+
+    public static function getList()
+    {
+        return ArrayHelper::map(static::find()->all(),'id','name');
+    }
+
 }

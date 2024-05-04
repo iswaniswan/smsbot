@@ -66,12 +66,16 @@ echo \app\widgets\Breadcrumbs::widget([
                 'columns' => [
                 <?php $tableSchema = $generator->getTableSchema(); ?>
                 <?php foreach ($tableSchema->columns as $column) {
-                    $format = $generator->generateColumnFormat($column); ?>[
-                    'attribute' => '<?= $column->name; ?>',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
+                    if ($column->isPrimaryKey) { ?>
+                        ['class' => 'yii\grid\SerialColumn'],
+                    <?php } else {
+                        $format = $generator->generateColumnFormat($column); ?>[
+                        'attribute' => '<?= $column->name; ?>',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                    <?php } ?>
                 <?php } ?> [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',

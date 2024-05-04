@@ -32,6 +32,7 @@ use Yii;
  * @property string|null $date_active
  * @property string|null $date_created
  * @property int $is_deleted
+ * @property Paket $paket
  */
 class Member extends \yii\db\ActiveRecord
 {
@@ -69,14 +70,14 @@ class Member extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'id_user' => 'Id User',
-            'id_paket' => 'Id Paket',
+            'id_user' => 'User',
+            'id_paket' => 'Paket',
             'nama' => 'Nama',
             'no_ktp' => 'No Ktp',
             'phone' => 'Phone',
             'alamat' => 'Alamat',
-            'id_reff_kotakab' => 'Id Reff Kotakab',
-            'id_reff_provinsi' => 'Id Reff Provinsi',
+            'id_reff_kotakab' => 'Kotakab',
+            'id_reff_provinsi' => 'Provinsi',
             'kotakab' => 'Kotakab',
             'provinsi' => 'Provinsi',
             'kodepos' => 'Kodepos',
@@ -95,4 +96,10 @@ class Member extends \yii\db\ActiveRecord
             'is_deleted' => 'Is Deleted',
         ];
     }
+
+    public function getPaket()
+    {
+        return $this->hasOne(Paket::class, ['id' => 'id_paket']);
+    }
+
 }

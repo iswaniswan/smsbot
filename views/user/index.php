@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -49,10 +50,10 @@ echo \app\widgets\Breadcrumbs::widget([
                 'dom' => 'lfrtipB',
                 'buttons' => ['copy', 'csv', 'excel', 'pdf', 'print']
                 ],
-                'columns' => [
-                                [
-                    'attribute' => 'id',
-                    'format' => 'raw',
+                'columns' => 
+                [
+                    [
+                    'class' => 'yii\grid\serialColumn',
                     'headerOptions' => ['style' => 'text-align:left;'],
                     'contentOptions' => ['style' => 'text-align:left'],
                     ],
@@ -69,13 +70,16 @@ echo \app\widgets\Breadcrumbs::widget([
                     'contentOptions' => ['style' => 'text-align:left'],
                     ],
                 [
-                    'attribute' => 'password',
-                    'format' => 'raw',
+                    'attribute' => 'id_role',
+                    'header' => 'Role',
+                    'value' => function(User $model) {
+                        return $model->role->name;
+                    },
                     'headerOptions' => ['style' => 'text-align:left;'],
                     'contentOptions' => ['style' => 'text-align:left'],
                     ],
                 [
-                    'attribute' => 'id_role',
+                    'attribute' => 'pin',
                     'format' => 'raw',
                     'headerOptions' => ['style' => 'text-align:left;'],
                     'contentOptions' => ['style' => 'text-align:left'],
@@ -95,12 +99,10 @@ echo \app\widgets\Breadcrumbs::widget([
                 [
                     'attribute' => 'is_deleted',
                     'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'date_create',
-                    'format' => 'raw',
+                    'header' => 'Status',
+                    'value' => function (User $model) {                        
+                        return $model->is_deleted == 1 ? 'Non Aktif' : 'Aktif';
+                    },
                     'headerOptions' => ['style' => 'text-align:left;'],
                     'contentOptions' => ['style' => 'text-align:left'],
                     ],
@@ -116,7 +118,7 @@ echo \app\widgets\Breadcrumbs::widget([
                             return Html::a('<i class="ti-pencil"></i>', ['update', 'id' => @$model->id], ['title' => 'Detail', 'data-pjax' => '0']);
                             },
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="ti-trash"></i>', ['delete', 'id' => @$model->id],['title' => 'Delete', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method'  => 'post']);
+                            return Html::a('<i class="ti-trash"></i>', ['soft-delete', 'id' => @$model->id],['title' => 'Delete', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method'  => 'post']);
                             },
                     ],
                 ],

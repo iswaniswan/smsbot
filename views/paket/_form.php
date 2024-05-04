@@ -46,15 +46,15 @@ if (@$mode == Mode::READ) {
                 <div class="container-fluid">
                     <?= $form->errorSummary($model) ?>
 
-                    <?= $form->field($model, 'nama')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'harga')->textInput() ?>
+<?= $form->field($model, 'price')->textInput() ?>
 
-<?= $form->field($model, 'reff_bonus_poin')->textInput() ?>
+<?= $form->field($model, 'poin')->textInput() ?>
 
-<?= $form->field($model, 'keterangan')->textInput() ?>
+<?= $form->field($model, 'remark')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'status_aktif')->textInput() ?>
+<?= $form->field($model, 'is_active')->textInput() ?>
 
                 </div>
                 <?= Html::hiddenInput('referrer', $referrer) ?>

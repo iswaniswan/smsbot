@@ -18,8 +18,8 @@ class PaketSearch extends Paket
     public function rules()
     {
         return [
-            [['id', 'harga', 'reff_bonus_poin', 'keterangan', 'status_aktif'], 'integer'],
-            [['nama'], 'safe'],
+            [['id', 'price', 'poin', 'is_active'], 'integer'],
+            [['name', 'remark'], 'safe'],
         ];
     }
 
@@ -43,13 +43,13 @@ class PaketSearch extends Paket
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'harga' => $this->harga,
-            'reff_bonus_poin' => $this->reff_bonus_poin,
-            'keterangan' => $this->keterangan,
-            'status_aktif' => $this->status_aktif,
+            'price' => $this->price,
+            'poin' => $this->poin,
+            'is_active' => $this->is_active,
         ]);
 
-        $query->andFilterWhere(['like', 'nama', $this->nama]);
+        $query->andFilterWhere(['like', 'name', $this->name])
+            ->andFilterWhere(['like', 'remark', $this->remark]);
 
         return $query;
     }

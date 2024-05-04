@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\Mode;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
@@ -61,7 +62,7 @@ class UserController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
             'referrer' => $referrer,
-            'mode' => 'view'
+            'mode' => Mode::READ
         ]);
     }
 
@@ -90,7 +91,7 @@ class UserController extends Controller
         return $this->render('view', [
             'model' => $model,
             'referrer' => $referrer,
-            'mode' => 'create'
+            'mode' => Mode::CREATE
         ]);
     }
 
@@ -110,6 +111,8 @@ class UserController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $referrer = $_POST['referrer'];
 
+            $model->password = Yii::$app->getSecurity()->generatePasswordHash($model->password);
+
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Update success.');
                 return $this->redirect($referrer);
@@ -121,7 +124,7 @@ class UserController extends Controller
         return $this->render('view', [
             'model' => $model,
             'referrer' => $referrer,
-            'mode' => 'update'
+            'mode' => Mode::UPDATE
         ]);
     }
 
@@ -160,4 +163,19 @@ class UserController extends Controller
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
+    public function actionSoftDelete($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->softDelete()) {
+            Yii::$app->session->setFlash('success', 'Delete success');
+        } else {
+            Yii::$app->session->setFlash('error', 'An error occured when delete.');
+        }
+
+        return $this->redirect(Yii::$app->request->referrer);
+    }
+
+
 }

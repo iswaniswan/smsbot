@@ -1,5 +1,6 @@
 <?php
 
+use app\components\Mode;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
@@ -10,7 +11,7 @@ use yii\helpers\Html;
 /* @var $mode string|null */
 
 $inputOptions = [];
-if (@$mode == 'view') {
+if (@$mode == Mode::READ) {
     $inputOptions = ['disabled' => true];
 }
 
@@ -46,19 +47,24 @@ if (@$mode == 'view') {
 
                     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'password')->passwordInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'id_role')->textInput() ?>
+                    <?php // $form->field($model, 'id_role')->textInput() ?>
 
-<?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'id_role')->dropDownList(\app\models\Role::getList(), [
+                            'prompt' => '- Pilih Role -',
+                            'required' => true,
+                    ])->label('Role') ?>
 
-<?= $form->field($model, 'access_token')->textInput(['maxlength' => true]) ?>
+                    <?= $form->field($model, 'auth_key')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'is_deleted')->textInput() ?>
+                    <?= $form->field($model, 'access_token')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'date_create')->textInput() ?>
+                    <?php // $form->field($model, 'is_deleted')->textInput() ?>
+
+                    <?php // $form->field($model, 'date_create')->textInput() ?>
 
                 </div>
                 <?= Html::hiddenInput('referrer', $referrer) ?>
@@ -68,11 +74,11 @@ if (@$mode == 'view') {
 </div>
 <div class="row mb-5">
     <div class="container-fluid">
-        <?= Html::a('<i class="ti-arrow-left"></i><span class="ml-2">Back</span>', ['/member'], ['class' => 'btn btn-info mb-1']) ?>
-        <?php if ($mode == 'view') { ?>
+        <?= Html::a('<i class="ti-arrow-left"></i><span class="ml-2">Back</span>', ['/user'], ['class' => 'btn btn-info mb-1']) ?>
+        <?php if ($mode == Mode::READ) { ?>
             <?= Html::a('<i class="ti-pencil-alt"></i><span class="ml-2">Edit</span>', ['update', 'id' => $model->id], ['class' => 'btn btn-warning mb-1']) ?>
         <?php } else { ?>
-            <?= Html::submitButton('<i class="ti-check"></i><span class="ml-2">' . ucwords($mode) .'</span>', ['class' => 'btn btn-primary mb-1']) ?>
+            <?= Html::submitButton('<i class="ti-check"></i><span class="ml-2">Update</span>', ['class' => 'btn btn-primary mb-1']) ?>
         <?php } ?>
     </div>
 </div>

@@ -8,11 +8,11 @@ use Yii;
  * This is the model class for table "paket".
  *
  * @property int $id
- * @property string|null $nama
- * @property int|null $harga
- * @property int|null $reff_bonus_poin
- * @property int|null $keterangan
- * @property int|null $status_aktif
+ * @property string|null $name
+ * @property int|null $price
+ * @property int|null $poin
+ * @property string|null $remark
+ * @property int|null $is_active
  */
 class Paket extends \yii\db\ActiveRecord
 {
@@ -30,8 +30,8 @@ class Paket extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['harga', 'reff_bonus_poin', 'keterangan', 'status_aktif'], 'integer'],
-            [['nama'], 'string', 'max' => 255],
+            [['price', 'poin', 'is_active'], 'integer'],
+            [['name', 'remark'], 'string', 'max' => 255],
         ];
     }
 
@@ -42,11 +42,11 @@ class Paket extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nama' => 'Nama',
-            'harga' => 'Harga',
-            'reff_bonus_poin' => 'Reff Bonus Poin',
-            'keterangan' => 'Keterangan',
-            'status_aktif' => 'Status Aktif',
+            'name' => 'Name',
+            'price' => 'Price',
+            'poin' => 'Poin',
+            'remark' => 'Remark',
+            'is_active' => 'Is Active',
         ];
     }
 }

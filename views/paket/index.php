@@ -50,43 +50,38 @@ echo \app\widgets\Breadcrumbs::widget([
                 'buttons' => ['copy', 'csv', 'excel', 'pdf', 'print']
                 ],
                 'columns' => [
-                                [
-                    'attribute' => 'id',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'nama',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'harga',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'reff_bonus_poin',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'keterangan',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'status_aktif',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                 [
+                                                        ['class' => 'yii\grid\SerialColumn'],
+                                    [
+                        'attribute' => 'name',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'price',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'poin',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'remark',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'is_active',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                     [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
                     'visibleButtons' => ['view' => true, 'update' => true, 'delete' => true],

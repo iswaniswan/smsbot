@@ -19,7 +19,7 @@ class UserSearch extends User
     {
         return [
             [['id', 'id_role', 'is_deleted'], 'integer'],
-            [['username', 'email', 'password', 'auth_key', 'access_token', 'date_create'], 'safe'],
+            [['username', 'email', 'password', 'auth_key', 'access_token'], 'safe'],
         ];
     }
 
@@ -45,12 +45,10 @@ class UserSearch extends User
             'id' => $this->id,
             'id_role' => $this->id_role,
             'is_deleted' => $this->is_deleted,
-            'date_create' => $this->date_create,
         ]);
 
         $query->andFilterWhere(['like', 'username', $this->username])
             ->andFilterWhere(['like', 'email', $this->email])
-            ->andFilterWhere(['like', 'password', $this->password])
             ->andFilterWhere(['like', 'auth_key', $this->auth_key])
             ->andFilterWhere(['like', 'access_token', $this->access_token]);
 

@@ -50,14 +50,13 @@ echo \app\widgets\Breadcrumbs::widget([
                 'buttons' => ['copy', 'csv', 'excel', 'pdf', 'print']
                 ],
                 'columns' => [
-                                [
-                    'attribute' => 'id',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
+                [
+                    'class' => 'yii\grid\serialColumn',
+                    'headerOptions' => ['style' => 'text-align:left; width: 35px'],
                     'contentOptions' => ['style' => 'text-align:left'],
                     ],
                 [
-                    'attribute' => 'id_user',
+                    'attribute' => 'nama',
                     'format' => 'raw',
                     'headerOptions' => ['style' => 'text-align:left;'],
                     'contentOptions' => ['style' => 'text-align:left'],
@@ -65,12 +64,9 @@ echo \app\widgets\Breadcrumbs::widget([
                 [
                     'attribute' => 'id_paket',
                     'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'nama',
-                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return @$model->paket->name;
+                    },
                     'headerOptions' => ['style' => 'text-align:left;'],
                     'contentOptions' => ['style' => 'text-align:left'],
                     ],

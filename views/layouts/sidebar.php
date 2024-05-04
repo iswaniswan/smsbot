@@ -1,8 +1,33 @@
 <?php
 
+use app\components\Session;
 use app\widgets\UplonMenu;
 
+$itemsAdmin = [
+    ['label' => 'Administrator','header' => true],
+    ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/dashboard/index']],
+    ['label' => 'User', 'icon' =>'ti-user', 'items'=>[
+        ['label' => 'login', 'url' =>['/user']],
+        ['label' => 'Member', 'url' =>['/member']],
+    ]],
+    ['label' => 'Paket', 'icon' => 'ti-package', 'url' => ['/paket/index']],
+];
+
+if (Session::isAdmin() === false) {
+    $itemsAdmin = [];
+}
+
+$items = [
+    ['label' => 'Logout', 'icon'=>'ti-shift-right', 'url' => ['/site/logout'], 'template'=>'<a class="nav-link {active}" data-method="post" href="{url}" {target}>{icon} {label}</a>'],
+];
+
+foreach ($itemsAdmin as $item) {
+    array_push($items, $item);
+}
+
 ?>
+
+
 
 
 <div class="left-side-menu">
@@ -11,20 +36,7 @@ use app\widgets\UplonMenu;
         <div id="sidebar-menu">
 
             <?= UplonMenu::widget([
-                'items' => [
-//                    ['label' => 'MENU UTAMA','header' => true],
-                    ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/dashboard/index']],
-//                    ['label' => 'Daftar Jabatan', 'icon' =>'puzzle-outline', 'items'=>[
-//                        ['label' => 'Analisis Jabatan', 'url' =>['/anjab-jabatan/index']],
-//                        ['label' => 'ABK', 'url' =>['/anjab-jabatan/index-abk']],
-//                        ['label' => 'Evaluasi Jabatan', 'url' =>['/anjab-jabatan/index-evjab']],
-//                        ['label' => 'SKJ', 'url' =>['/anjab-jabatan/index-skj']],
-//                    ]],
-                    ['label' => 'Member', 'icon' =>'ti-user', 'items'=>[
-                        ['label' => 'Member', 'url' =>['/member']],
-                    ]],
-                    ['label' => 'Logout', 'icon'=>'ti-shift-right', 'url' => ['/site/logout'],'template'=>'<a class="nav-link {active}" data-method="post" href="{url}" {target}>{icon} {label}</a>'],
-                ]
+                'items' => $items
             ]) ?>
         </div>
         <!-- End Sidebar -->
