@@ -1,21 +1,20 @@
 <?php
 
-use app\models\User;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\UserSearch */
+/* @var $searchModel app\models\AccessSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$this->title = 'Daftar User';
+$this->title = 'Daftar Access';
 $this->params['breadcrumbs'][] = $this->title;
 
 echo \app\widgets\Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     'options' => [
-        'title' => 'User'    ],
+        'title' => 'Access'    ],
 ]) ?>
 
 <div class="row mb-4">
@@ -50,63 +49,27 @@ echo \app\widgets\Breadcrumbs::widget([
                 'dom' => 'lfrtipB',
                 'buttons' => ['copy', 'csv', 'excel', 'pdf', 'print']
                 ],
-                'columns' => 
-                [
-                    [
-                    'class' => 'yii\grid\serialColumn',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'username',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'email',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'id_role',
-                    'header' => 'Role',
-                    'value' => function(User $model) {
-                        return ucwords(@$model->role->name);
-                    },
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                /*[
-                    'attribute' => 'pin',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'auth_key',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                [
-                    'attribute' => 'access_token',
-                    'format' => 'raw',
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],*/
-                [
-                    'attribute' => 'is_deleted',
-                    'format' => 'raw',
-                    'header' => 'Status',
-                    'value' => function (User $model) {                        
-                        return @$model->getBadgeStatus();
-                    },
-                    'headerOptions' => ['style' => 'text-align:left;'],
-                    'contentOptions' => ['style' => 'text-align:left'],
-                    ],
-                 [
+                'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
+                                    [
+                        'attribute' => 'name',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        'value' => function ($model) {
+                                return ucwords($model->name);
+                            }
+                        ],
+                                    [
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        'value' => function ($model) {
+                                return @$model->getBadgeStatus();
+                            }
+                        ],
+                                     [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
                     'visibleButtons' => ['view' => true, 'update' => true, 'delete' => true],
@@ -118,7 +81,7 @@ echo \app\widgets\Breadcrumbs::widget([
                             return Html::a('<i class="ti-pencil"></i>', ['update', 'id' => @$model->id], ['title' => 'Detail', 'data-pjax' => '0']);
                             },
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="ti-trash"></i>', ['soft-delete', 'id' => @$model->id],['title' => 'Delete', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method'  => 'post']);
+                            return Html::a('<i class="ti-trash"></i>', ['delete', 'id' => @$model->id],['title' => 'Delete', 'data-confirm' => Yii::t('yii', 'Are you sure you want to delete this item?'), 'data-method'  => 'post']);
                             },
                     ],
                 ],

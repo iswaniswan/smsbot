@@ -141,4 +141,21 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return true;
     }
 
+    public function getBadgeStatus()
+    {
+        $text = $this->is_deleted == '0' ? 'Active' : 'Inactive';
+
+        $html = <<<HTML
+                <span class="badge badge-light-dark">$text</span>
+        HTML;
+
+        if ($this->is_deleted == '0') {
+            $html = <<<HTML
+                    <span class="badge badge-light-success">$text</span>
+            HTML;
+        }
+
+        return $html;
+    }
+
 }

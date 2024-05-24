@@ -6,11 +6,13 @@ use app\widgets\UplonMenu;
 $itemsAdmin = [
     ['label' => 'Administrator','header' => true],
     ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/dashboard/index']],
-    ['label' => 'User', 'icon' =>'ti-user', 'items'=>[
-        ['label' => 'login', 'url' =>['/user']],
-        ['label' => 'Member', 'url' =>['/member']],
+    ['label' => 'Setting', 'icon' => 'ti-settings', 'items' => [
+        ['label' => 'User', 'url' =>['/user']],
+        ['label' => 'Menu', 'url' =>['/menu']],
+        ['label' => 'Access', 'url' =>['/access']],
+        ['label' => 'Role', 'url' =>['/role']],
+        ['label' => 'Approval Stage', 'url' =>['/approval-stage']],
     ]],
-    ['label' => 'Paket', 'icon' => 'ti-package', 'url' => ['/paket/index']],
 ];
 
 if (Session::isAdmin() === false) {

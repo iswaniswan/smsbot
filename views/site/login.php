@@ -12,7 +12,22 @@ $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="row mb-4 justify-content-center">
+<style>
+    .box-center {
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        height: 80vh;
+        width: 80vw;
+        margin:auto;
+    }
+    a.dropdown-item, a.dropdown-item *:hover {
+        cursor: pointer;
+        background-color: transparent !important;
+    }
+</style>
+
+<div class="row mb-4 justify-content-center box-center">
     <div class="col-md-6" style="max-width: 20rem">
         <?php $form = ActiveForm::begin([
             'id' => 'login-form',
