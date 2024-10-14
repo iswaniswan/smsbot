@@ -25,6 +25,72 @@ $this->params['breadcrumbs'][] = $this->title;
         cursor: pointer;
         background-color: transparent !important;
     }
+
+    .leaves {
+        border-radius: 28px 2px 2px 2px
+    }
+    .radius-top-left {
+        border-radius: 28px 2px 2px 2px !important;
+    }
+    .h1-icon {
+        width: fit-content;
+        /* height: fit-content; */
+        margin-left: auto;
+        margin-right: auto;
+        border: 2px solid #64b0f2;
+        padding: 1rem 1.2rem;
+        border-radius: 50%;
+    }
+
+    .leaves-sm {
+        border-radius: 18px 2px 2px 2px;
+    }
+
+    .rounded {
+        border-radius: 18px !important;
+    }
+    .shadow-primary {
+        box-shadow: 0 0 35px 0 rgba(100, 176, 242, .5) !important;
+    }
+
+    /** placeholder color */
+    input::placeholder {
+        color: #64b0f2 !important; /* Change this to your desired color */
+        opacity: 1; /* Optional: Ensures full color opacity */
+    }
+    input::-webkit-input-placeholder { /* Chrome, Safari, Opera */
+        color: #64b0f2 !important
+    }
+
+    input:-moz-placeholder { /* Firefox 18- */
+        color: #64b0f2 !important
+    }
+
+    input::-moz-placeholder { /* Firefox 19+ */
+        color: #64b0f2 !important
+    }
+
+    input:-ms-input-placeholder { /* IE 10+ */
+        color: #64b0f2 !important
+    }
+
+    .checkbox label::before {
+        border: 1px solid #64b0f2 !important;
+    }
+</style>
+<style>
+    .box-center {
+        display: flex;
+        justify-content: center;
+        align-items:center;
+        height: 80vh;
+        width: 80vw;
+        margin:auto;
+    }
+    a.dropdown-item, a.dropdown-item *:hover {
+        cursor: pointer;
+        background-color: transparent !important;
+    }
 </style>
 
 <div class="row mb-4 justify-content-center box-center">
@@ -36,45 +102,54 @@ $this->params['breadcrumbs'][] = $this->title;
 //                'template' => "{label}\n{input}\n{error}",
                 'template' => "{label}\n{input}",
                 'labelOptions' => ['class' => 'col-12 col-form-label text-secondary', 'style' => 'font-weight: 400', 'icon' => '<i></i>'],
-                'inputOptions' => ['class' => 'col-12 form-control text-secondary'],
+                'inputOptions' => ['class' => 'col-12 form-control text-secondary rounded border-primary'],
 //                'errorOptions' => ['class' => 'col-12 invalid-feedback'],
                 'horizontalCssClasses' => [
-                    'field' => 'mb-3',
+                    'field' => 'mb-4',
                 ]
-            ],
+            ],            
+            'validateOnBlur'=>false,
+            'enableAjaxValidation'=>true,
+            'validateOnChange'=>false,
         ]); ?>
-        <div class="card mb-0">
-            <div class="card-header bg-dark">
+        <div class="card p-2 leaves shadow-primary">
+            <div class="card-header bg-transparent radius-top-left">
                 <div class="text-center">
-                    <div class="my-3">
+                    <div class="d-none">
                         <a href="#">
                             <span><img src="assets/images/logo.png" alt="" height="28"></span>
                         </a>
                     </div>
-                    <h5 class="text-white text-uppercase py-3 font-16"><?= Html::encode($this->title) ?></h5>
-                    <p class="text-white-50">Please fill out the following fields</p>
+                    <h1 class="bg-primary text-uppercase h1-icon">
+                        <i class="ti-link text-white"></i>
+                        <?php // Html::encode($this->title) ?>
+                    </h1>
                 </div>
             </div>
             <div class="card-body">
                 <?= $form->field($model, 'username')->textInput([
-                        'required' =>true
-                ]) ?>
+                        'required' =>true,
+                        'placeholder' => 'Username'
+                ])->label(false) ?>
 
                 <?= $form->field($model, 'email')->input('email', [
-                        'required' => true
-                ]) ?>
+                        'required' => true,
+                        'placeholder' => 'email'
+                ])->label(false) ?>
 
                 <?= $form->field($model, 'password')->passwordInput([
-                        'required' => true
-                ]) ?>
+                        'required' => true,
+                        'placeholder' => 'Password'
+                ])->label(false) ?>
 
                 <?= $form->field($model, 'accept_terms')->checkbox([
                     'template' => "<div class=\"col-12 checkbox checkbox-primary ml-2 text-secondary\">{input} {label}</div>\n<div class=\"col-12\">{error}</div>",
                     'required' => true,
+                    'labelOptions' => [ 'class' => 'text-primary' ]
                 ])->label('I accept Terms and Conditions') ?>
 
                 <div class="" style="padding: 0.5rem 0rem;">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-outline-primary', 'name' => 'login-button']) ?>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-block btn-primary rounded', 'name' => 'login-button']) ?>
                 </div>
             </div> <!-- end card-body -->
         </div>
@@ -82,7 +157,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- end card -->
         <div class="row mt-3">
             <div class="col-12 text-center">
-                <p class="text-secondary">Have an account? <a href="<?= \yii\helpers\Url::to(['/site/login']) ?>" class="text-primary ml-1"><b>Login</b></a></p>
+                <p class="text-primary">Have an account? <a href="<?= \yii\helpers\Url::to(['/site/login']) ?>" class="text-primary ml-1"><b>Login</b></a></p>
             </div> <!-- end col -->
         </div>
         <!-- end row -->

@@ -5,7 +5,7 @@ use app\components\Session;
  ?>
 
 
-<div class="navbar-custom">
+<div class="navbar-custom bg-primary">
     <ul class="list-unstyled topnav-menu float-right mb-0">
         <?php /*
             <li class="dropdown notification-list">
@@ -148,7 +148,7 @@ use app\components\Session;
             </li>
             */ ?>
         <li class="dropdown notification-list">
-            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+            <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light text-white" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                 <img src="<?= Yii::getAlias('@web').'/images/no-photo.jpg' ?>" alt="user-image" class="rounded-circle">
                 <span class="d-none d-sm-inline-block ml-1 font-weight-medium"><?= Session::getUsername() ?></span>
                 <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
@@ -217,7 +217,7 @@ use app\components\Session;
     <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
         <li>
             <button class="button-menu-mobile waves-effect waves-light">
-                <i class="mdi mdi-menu"></i>
+                <i class="mdi mdi-menu text-white"></i>
             </button>
         </li>
 
