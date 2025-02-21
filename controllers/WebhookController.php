@@ -56,14 +56,22 @@ class WebhookController extends \yii\web\Controller
         $token = $this->credentials['telegram']['token'];
         $apiUrl = "https://api.telegram.org/bot$token/setWebhook?url=";
         $result = file_get_contents($apiUrl);
-        var_dump($result);
+        echo($result . '<br/>');
 
         $token = $this->credentials['telegram']['token'];
         $apiUrl = "https://api.telegram.org/bot$token/setWebhook?url=https://smsbot.iswan.my.id/web/webhook";
         $result = file_get_contents($apiUrl);
-        var_dump($result);
+        echo($result . '<br/>');
 
         die('success');
+    }
+
+    public function actionVerify()
+    {        
+        $token = $this->credentials['telegram']['token'];
+        $apiUrl = "https://api.telegram.org/bot$token/getWebhookInfo";
+        $response = file_get_contents($apiUrl);
+        echo $response;
     }
 
 }
