@@ -5,7 +5,7 @@ use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Menu */
+/* @var $model app\models\UserRole */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $referrer string */
 /* @var $mode Mode */
@@ -46,17 +46,15 @@ if (@$mode == Mode::READ) {
                 <div class="container-fluid">
                     <?= $form->errorSummary($model) ?>
 
-                    <?= $form->field($model, 'id_parent')->dropDownList(\app\models\Menu::getListMenu(), [
-                        'prompt' => '- Pilih Menu Parent -',
-                    ])->label('Parent') ?>
+                    <?= $form->field($model, 'id_user')->textInput() ?>
 
-                    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'id_role')->textInput() ?>
 
-                    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+<?= $form->field($model, 'status')->textInput() ?>
 
-                    <?= $form->field($model, 'n_order')->textInput(['maxlength' => true])->label('Order') ?>
+<?= $form->field($model, 'date_created')->textInput() ?>
 
-                    <?= $form->field($model, 'status')->textInput() ?>
+<?= $form->field($model, 'date_updated')->textInput() ?>
 
                 </div>
                 <?= Html::hiddenInput('referrer', $referrer) ?>

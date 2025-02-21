@@ -18,8 +18,8 @@ class RoleSearch extends Role
     public function rules()
     {
         return [
-            [['id', 'level', 'status'], 'integer'],
-            [['name', 'code', 'date_created', 'date_updated'], 'safe'],
+            [['id', 'status'], 'integer'],
+            [['name', 'date_created', 'date_updated'], 'safe'],
         ];
     }
 
@@ -43,17 +43,12 @@ class RoleSearch extends Role
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'level' => $this->level,
             'status' => $this->status,
             'date_created' => $this->date_created,
             'date_updated' => $this->date_updated,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'code', $this->code]);
-
-        /** default filter */
-//        $query->andFilterWhere(['status' => '1']);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $query;
     }

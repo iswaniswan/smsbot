@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Access;
+use app\models\UserRole;
 
 /**
- * AccessSearch represents the model behind the search form of `app\models\Access`.
+ * UserRoleSearch represents the model behind the search form of `app\models\UserRole`.
  */
-class AccessSearch extends Access
+class UserRoleSearch extends UserRole
 {
     /**
      * @inheritdoc
@@ -18,8 +18,8 @@ class AccessSearch extends Access
     public function rules()
     {
         return [
-            [['id', 'status'], 'integer'],
-            [['name', 'permission', 'date_created', 'date_updated'], 'safe'],
+            [['id', 'id_user', 'id_role', 'status'], 'integer'],
+            [['date_created', 'date_updated'], 'safe'],
         ];
     }
 
@@ -34,7 +34,7 @@ class AccessSearch extends Access
 
     public function getQuerySearch($params)
     {
-        $query = Access::find();
+        $query = UserRole::find();
 
         $this->load($params);
 
@@ -43,13 +43,12 @@ class AccessSearch extends Access
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'id_user' => $this->id_user,
+            'id_role' => $this->id_role,
             'status' => $this->status,
             'date_created' => $this->date_created,
             'date_updated' => $this->date_updated,
         ]);
-
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'permission', $this->permission]);
 
         return $query;
     }

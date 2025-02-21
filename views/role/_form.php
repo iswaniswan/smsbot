@@ -48,10 +48,6 @@ if (@$mode == Mode::READ) {
 
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-<?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-
-<?= $form->field($model, 'level')->textInput() ?>
-
 <?= $form->field($model, 'status')->textInput() ?>
 
 <?= $form->field($model, 'date_created')->textInput() ?>

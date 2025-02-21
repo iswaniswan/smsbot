@@ -2,14 +2,14 @@
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\ApprovalStage */
+/* @var $model app\models\UserRole */
 /* @var $referrer string */
 
-$this->title = 'Tambah Approval Stage';
-$this->params['breadcrumbs'][] = ['label' => 'Approval Stages', 'url' => ['index']];
+$this->title = 'Tambah User Role';
+$this->params['breadcrumbs'][] = ['label' => 'User Roles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="approval-stage-create">
+<div class="user-role-create">
 
     <?= $this->render('_form', [
         'model' => $model,

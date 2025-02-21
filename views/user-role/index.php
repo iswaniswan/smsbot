@@ -4,17 +4,17 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\ApprovalStageSearch */
+/* @var $searchModel app\models\UserRoleSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 
-$this->title = 'Daftar Approval Stage';
+$this->title = 'Daftar User Role';
 $this->params['breadcrumbs'][] = $this->title;
 
 echo \app\widgets\Breadcrumbs::widget([
     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     'options' => [
-        'title' => 'Approval Stage'    ],
+        'title' => 'User Role'    ],
 ]) ?>
 
 <div class="row mb-4">
@@ -52,19 +52,31 @@ echo \app\widgets\Breadcrumbs::widget([
                 'columns' => [
                                                         ['class' => 'yii\grid\SerialColumn'],
                                     [
-                        'attribute' => 'model',
+                        'attribute' => 'id_user',
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'text-align:left;'],
                         'contentOptions' => ['style' => 'text-align:left'],
                         ],
                                     [
-                        'attribute' => 'id_model',
+                        'attribute' => 'id_role',
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'text-align:left;'],
                         'contentOptions' => ['style' => 'text-align:left'],
                         ],
                                     [
-                        'attribute' => 'n_order',
+                        'attribute' => 'status',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'date_created',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'date_updated',
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'text-align:left;'],
                         'contentOptions' => ['style' => 'text-align:left'],

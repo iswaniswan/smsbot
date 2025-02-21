@@ -14,7 +14,7 @@ class Session extends \yii\web\Session
 
     public static function isAdmin()
     {        
-        return (int) Yii::$app->user->identity->id_role == Role::ADMIN;
+        return (int) Yii::$app->user->identity->role->id == Role::ADMIN;
     }
 
     public function getPlatform()

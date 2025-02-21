@@ -1,14 +1,14 @@
 <?php
 
 /* @var $this yii\web\View */
-/* @var $model app\models\AccessDetail */
+/* @var $model app\models\UserRole */
 /* @var $referrer string */
 
-$this->title = 'Edit Access Detail';
-$this->params['breadcrumbs'][] = ['label' => 'Access Details', 'url' => ['index']];
+$this->title = 'Edit User Role';
+$this->params['breadcrumbs'][] = ['label' => 'User Roles', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Sunting';
 ?>
-<div class="access-detail-update">
+<div class="user-role-update">
 
     <?= $this->render('_form', [
         'model' => $model,

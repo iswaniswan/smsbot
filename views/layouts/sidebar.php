@@ -3,29 +3,15 @@
 use app\components\Session;
 use app\widgets\UplonMenu;
 
-$itemsAdmin = [
+$items = [
     ['label' => 'Administrator','header' => true],
     ['label' => 'Dashboard', 'icon' => 'ti-dashboard', 'url' => ['/dashboard/index']],
     ['label' => 'Setting', 'icon' => 'ti-settings', 'items' => [
         ['label' => 'User', 'url' =>['/user']],
-        ['label' => 'Menu', 'url' =>['/menu']],
-        ['label' => 'Access', 'url' =>['/access']],
         ['label' => 'Role', 'url' =>['/role']],
-        ['label' => 'Approval Stage', 'url' =>['/approval-stage']],
     ]],
-];
-
-if (Session::isAdmin() === false) {
-    $itemsAdmin = [];
-}
-
-$items = [
     ['label' => 'Logout', 'icon'=>'ti-shift-right', 'url' => ['/site/logout'], 'template'=>'<a class="nav-link {active}" data-method="post" href="{url}" {target}>{icon} {label}</a>'],
 ];
-
-foreach ($itemsAdmin as $item) {
-    array_push($items, $item);
-}
 
 ?>
 

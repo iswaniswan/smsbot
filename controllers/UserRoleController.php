@@ -4,17 +4,17 @@ namespace app\controllers;
 
 use Yii;
 use app\components\Mode;
-use app\models\ApprovalStage;
-use app\models\ApprovalStageSearch;
+use app\models\UserRole;
+use app\models\UserRoleSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /* custom controller, theme uplon integrated */
 /**
- * ApprovalStageController implements the CRUD actions for ApprovalStage model.
+ * UserRoleController implements the CRUD actions for UserRole model.
  */
-class ApprovalStageController extends Controller
+class UserRoleController extends Controller
 {
     /**
      * @inheritDoc
@@ -35,13 +35,13 @@ class ApprovalStageController extends Controller
     }
 
     /**
-     * Lists all ApprovalStage models.
+     * Lists all UserRole models.
      *
      * @return string
      */
     public function actionIndex()
     {
-        $searchModel = new ApprovalStageSearch();
+        $searchModel = new UserRoleSearch();
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
@@ -51,7 +51,7 @@ class ApprovalStageController extends Controller
     }
 
     /**
-     * Displays a single ApprovalStage model.
+     * Displays a single UserRole model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -67,13 +67,13 @@ class ApprovalStageController extends Controller
     }
 
     /**
-     * Creates a new ApprovalStage model.
+     * Creates a new UserRole model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate()
     {
-        $model = new ApprovalStage();
+        $model = new UserRole();
 
         $referrer = Yii::$app->request->referrer;
 
@@ -96,7 +96,7 @@ class ApprovalStageController extends Controller
     }
 
     /**
-     * Updates an existing ApprovalStage model.
+     * Updates an existing UserRole model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -127,7 +127,7 @@ class ApprovalStageController extends Controller
     }
 
     /**
-     * Deletes an existing ApprovalStage model.
+     * Deletes an existing UserRole model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
@@ -147,15 +147,15 @@ class ApprovalStageController extends Controller
     }
 
     /**
-     * Finds the ApprovalStage model based on its primary key value.
+     * Finds the UserRole model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return ApprovalStage the loaded model
+     * @return UserRole the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = ApprovalStage::findOne(['id' => $id])) !== null) {
+        if (($model = UserRole::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

@@ -50,18 +50,9 @@ echo \app\widgets\Breadcrumbs::widget([
                 'buttons' => ['copy', 'csv', 'excel', 'pdf', 'print']
                 ],
                 'columns' => [
-                        ['class' => 'yii\grid\SerialColumn'],
+                                                        ['class' => 'yii\grid\SerialColumn'],
                                     [
                         'attribute' => 'name',
-                        'format' => 'raw',
-                        'headerOptions' => ['style' => 'text-align:left;'],
-                        'contentOptions' => ['style' => 'text-align:left'],
-                        'value' => function ($model) {
-                                return ucwords($model->name);
-                            }
-                        ],
-                                    [
-                        'attribute' => 'level',
                         'format' => 'raw',
                         'headerOptions' => ['style' => 'text-align:left;'],
                         'contentOptions' => ['style' => 'text-align:left'],
@@ -69,9 +60,18 @@ echo \app\widgets\Breadcrumbs::widget([
                                     [
                         'attribute' => 'status',
                         'format' => 'raw',
-                        'value' => function ($model) {
-                            return @$model->getBadgeStatus();
-                        },
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'date_created',
+                        'format' => 'raw',
+                        'headerOptions' => ['style' => 'text-align:left;'],
+                        'contentOptions' => ['style' => 'text-align:left'],
+                        ],
+                                    [
+                        'attribute' => 'date_updated',
+                        'format' => 'raw',
                         'headerOptions' => ['style' => 'text-align:left;'],
                         'contentOptions' => ['style' => 'text-align:left'],
                         ],

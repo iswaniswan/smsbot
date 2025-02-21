@@ -5,25 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "role".
+ * This is the model class for table "user_role".
  *
  * @property int $id
- * @property string $name
+ * @property int $id_user
+ * @property int $id_role
  * @property int $status
  * @property string $date_created
  * @property string|null $date_updated
  */
-class Role extends \yii\db\ActiveRecord
+class UserRole extends \yii\db\ActiveRecord
 {
-
-    const ADMIN = 1;
-
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'role';
+        return 'user_role';
     }
 
     /**
@@ -32,10 +30,9 @@ class Role extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['status'], 'integer'],
+            [['id_user', 'id_role'], 'required'],
+            [['id_user', 'id_role', 'status'], 'integer'],
             [['date_created', 'date_updated'], 'safe'],
-            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -46,7 +43,8 @@ class Role extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'id_user' => 'Id User',
+            'id_role' => 'Id Role',
             'status' => 'Status',
             'date_created' => 'Date Created',
             'date_updated' => 'Date Updated',
