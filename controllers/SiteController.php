@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\User;
+use app\components\Webhook;
 use Yii;
 use yii\base\Exception;
 use yii\filters\AccessControl;
@@ -11,6 +12,8 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\helpers\Url;
+
 
 class SiteController extends Controller
 {
@@ -172,6 +175,16 @@ class SiteController extends Controller
         return $this->render('register', [
             'model' => $model,
         ]);
+    }
+
+    public function actionWebhook()
+    {
+        $webhook = new Webhook();
+        $apiUrl = $webhook->getApiUrl();
+
+        $webhookUrl = Url::base('https') . '/site/webhook';  die();
+        // Set webhook
+        file_get_contents($apiUrl . "setWebhook?url=$webhookUrl");
     }
 
 }

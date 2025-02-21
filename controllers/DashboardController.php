@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use app\components\Webhook;
 
 class DashboardController extends \yii\web\Controller
 {
@@ -32,6 +33,9 @@ class DashboardController extends \yii\web\Controller
     public function actionIndex()
     {
         $this->layout = 'main';
+
+        $webhook = new Webhook();
+
         return $this->render('index');
     }
 
