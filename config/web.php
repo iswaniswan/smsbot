@@ -47,6 +47,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'webhook' => 'webhook/index',
             ],
         ],
         'assetManager' => [

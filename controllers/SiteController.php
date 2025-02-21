@@ -177,14 +177,9 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionWebhook()
-    {
-        $webhook = new Webhook();
-        $apiUrl = $webhook->getApiUrl();
-
-        $webhookUrl = Url::base('https') . '/site/webhook';
-        // Set webhook
-        file_get_contents($apiUrl . "setWebhook?url=$webhookUrl");
-    }
+    // public function actionWebhook()
+    // {
+    //     die('webhook');
+    // }
 
 }
