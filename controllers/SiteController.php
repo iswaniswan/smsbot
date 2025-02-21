@@ -182,7 +182,7 @@ class SiteController extends Controller
         $webhook = new Webhook();
         $apiUrl = $webhook->getApiUrl();
 
-        $webhookUrl = Url::base('https') . '/site/webhook';  die();
+        $webhookUrl = Url::base('https') . '/site/webhook';
         // Set webhook
         file_get_contents($apiUrl . "setWebhook?url=$webhookUrl");
     }
