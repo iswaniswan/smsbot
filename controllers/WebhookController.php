@@ -6,6 +6,9 @@ use Yii;
 use yii\web\Response;
 use App\components\Webhook;
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 class WebhookController extends \yii\web\Controller
 {
     protected $credentials = null;
@@ -19,14 +22,29 @@ class WebhookController extends \yii\web\Controller
             throw new \Exception("Telegram credentials not found");
         }
     }
+    
+    public function beforeAction($action)
+    {
+        if ($action->id == 'index') {
+            \Yii::$app->controller->enableCsrfValidation = false;
+        }
+        
+        return parent::beforeAction($action);
+    }
+    
 
     public function actionIndex()
     {
-        // Disable Yii2 response formatting
         \Yii::$app->response->format = Response::FORMAT_RAW;
+        ob_end_clean();  // Clean any output buffer to prevent extra content
 
         // Retrieve the update sent by Telegram
         $update = json_decode(file_get_contents('php://input'), true);
+        
+        \Yii::info('Received update: ' . json_encode($update), __METHOD__);
+        
+        \Yii::$app->response->headers->add('Content-Type', 'text/plain');
+
 
         if ($update) {
             // Process the incoming update
@@ -41,7 +59,7 @@ class WebhookController extends \yii\web\Controller
 
         // Send an HTTP 200 OK response (necessary for Telegram to accept the webhook)
         \Yii::$app->response->statusCode = 200;
-        return 'OK'; // Send a simple response
+        return '';
     }
 
     private function sendMessage($chatId, $message)
@@ -62,8 +80,22 @@ class WebhookController extends \yii\web\Controller
         $apiUrl = "https://api.telegram.org/bot$token/setWebhook?url=https://smsbot.iswan.my.id/web/webhook";
         $result = file_get_contents($apiUrl);
         echo($result . '<br/>');
-
-        die('success');
+    }
+    
+    public function actionUnset()
+    {
+        $token = $this->credentials['telegram']['token'];
+        $apiUrl = "https://api.telegram.org/bot$token/setWebhook?url=";
+        $result = file_get_contents($apiUrl);
+        echo($result . '<br/>');
+    }
+    
+    public function actionSet()
+    {
+        $token = $this->credentials['telegram']['token'];
+        $apiUrl = "https://api.telegram.org/bot$token/setWebhook?url=https://smsbot.iswan.my.id/web/webhook/index";
+        $result = file_get_contents($apiUrl);
+        echo($result . '<br/>');
     }
 
     public function actionVerify()
