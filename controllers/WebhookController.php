@@ -71,8 +71,26 @@ class WebhookController extends \yii\web\Controller
     {
         $token = $this->credentials['telegram']['token'];
         $apiUrl = "https://api.telegram.org/bot$token/sendMessage?chat_id=$chatId&text=" . urlencode($message);
-        file_get_contents($apiUrl);
+
+        // Set up the context options to disable SSL verification
+        $opts = [
+            'http' => [
+                'method'  => "GET",
+                'header'  => "Accept: application/json\r\n",
+                'ssl' => [
+                    'verify_peer' => false,        // Disable peer verification
+                    'verify_peer_name' => false    // Disable verification of peer name
+                ]
+            ]
+        ];
+
+        // Create a stream context
+        $context = stream_context_create($opts);
+
+        // Use file_get_contents with the context to make the request
+        file_get_contents($apiUrl, false, $context);
     }
+
 
     public function actionReset()
     {
