@@ -35,12 +35,36 @@ class WebhookQuery
          * 
          */
         $array = explode(' ', $text);
+        if ($this->validateNull(@$array[0])) {
+            return $this->getResult();
+        }
         $this->command = $array[0];
+
+        if ($this->validateNull(@$array[1])) {
+            return $this->getResult();
+        }
         $this->keyword = $array[1];
-        $this->params = array_slice($array, 2);
+        
+        $array_params = array_slice($array, 2);
+        if ($this->validateNull(@$array_params[0])) {
+            return $this->getResult();
+        }
+
+        if ($this->validateNull(@$array_params[1])) {
+            return $this->getResult();
+        }
+
+        if ($this->validateNull(@$array_params[2])) {
+            return $this->getResult();
+        }
 
 
         $this->validateParams();
+    }
+
+    private function validateNull($param=null)
+    {
+        return $param == null ? true : false;
     }
 
     private function validateParams()
@@ -65,7 +89,7 @@ class WebhookQuery
             break;
         }
 
-        
+
     }
 
     protected function query()
