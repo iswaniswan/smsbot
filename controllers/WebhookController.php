@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\web\Response;
 use App\components\Webhook;
+use app\components\WebhookQuery;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -52,8 +53,12 @@ class WebhookController extends \yii\web\Controller
                 $chatId = $update['message']['chat']['id'];
                 $text = $update['message']['text'];
 
+                // query text
+                $query = new WebhookQuery($chatId, $text);
+                $result = $query->getResult();
+
                 // Send a response back to the user
-                $this->sendMessage($chatId, "You said: $text");
+                $this->sendMessage($chatId, $result);
             }
         }
 
