@@ -18,6 +18,7 @@ use yii\web\IdentityInterface;
  * @property int|null $is_deleted
  * @property string|null $date_create
  * @property Role|null $role
+ * @property UserRole|null $userRole
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {

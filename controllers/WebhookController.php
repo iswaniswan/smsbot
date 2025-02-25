@@ -57,6 +57,8 @@ class WebhookController extends \yii\web\Controller
                 $query = new WebhookQuery($chatId, $text);
                 $result = $query->getResult();
 
+                echo($result); die();
+
                 // Send a response back to the user
                 $this->sendMessage($chatId, $result);
             }
