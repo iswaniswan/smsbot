@@ -10,7 +10,7 @@ $config = [
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
-        '@themes' => '@app/themes'
+        '@themes' => '@app/themes',
     ],
     'components' => [
         'request' => [
@@ -58,6 +58,18 @@ $config = [
                     ]
                 ],
             ]
+        ],
+        'redis' => [
+            'class' => \yii\redis\Connection::class,
+            // 'hostname' => '127.0.0.1',
+            'hostname' => '172.22.97.97',
+            'port' => 6379,
+            'database' => 0,
+        ],
+        'queue' => [
+            'class' => \yii\queue\redis\Queue::class,
+            'redis' => 'redis',
+            'channel' => 'queue',
         ]
     ],
     'params' => $params,

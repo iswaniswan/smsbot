@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use Yii;
 use yii\console\Controller;
 use yii\console\ExitCode;
 
@@ -31,4 +32,18 @@ class HelloController extends Controller
 
         return ExitCode::OK;
     }
+
+    public function actionTestRedis()
+    {
+        try {
+            $redis = Yii::$app->redis;
+            $redis->set('test_key', 'Hello from Yii2');
+            $value = $redis->get('test_key');
+            echo "Test passed. Redis value: $value\n";
+        } catch (\Exception $e) {
+            echo "Error connecting to Redis: " . $e->getMessage() . "\n";
+        }
+    }
+
+
 }

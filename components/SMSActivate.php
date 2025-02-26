@@ -9,9 +9,8 @@ use \Exception;
 
 class SMSActivate
 {
-    private $url = 'https://api.sms-activate.org/stubs/handler_api.php';
-
-    private $apiKey;
+    protected $url = 'https://api.sms-activate.org/stubs/handler_api.php';
+    protected $apiKey;
 
     public function __construct($apiKey)
     {

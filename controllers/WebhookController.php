@@ -4,8 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Response;
-use App\components\Webhook;
+use app\components\Webhook;
 use app\components\WebhookQuery;
+use app\components\SMSGuruStatic;
+use common\jobs\ExternalApiJob;
+use console\controllers\QueueController;
+use app\components\ApiJob;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -106,11 +110,26 @@ class WebhookController extends \yii\web\Controller
     }
 
     public function actionVerify()
-    {        
+    {
         $token = $this->credentials['telegram']['token'];
         $apiUrl = "https://api.telegram.org/bot$token/getWebhookInfo";
         $response = file_get_contents($apiUrl);
         echo $response;
     }
+
+    public function actionTest()
+    {
+        $userId = Yii::$app->user->id;
+        $requestId = uniqid('req_', true);  // Generate a unique request ID
+
+        // Push the job to the Redis queue
+        Yii::$app->queue->push(new ApiJob([
+            'requestId' => $requestId,
+            'userId' => $userId,
+        ]));
+        echo 'success';
+        // Yii::$app->runAction('queue/test-request-data');
+    }
+
 
 }
